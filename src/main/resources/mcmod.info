@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "securitycraft",
+  "name": "SecurityCraft",
+  "description": "Simple security tools for Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Grissess"],
+  "credits": "the Forge and FML guys, for making the template",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "securitycraft:blocks/locksmith_workbench_side",
+    "down": "blocks/planks_oak",
+    "up": "securitycraft:blocks/locksmith_workbench_top",
+    "north": "securitycraft:blocks/locksmith_workbench_side",
+    "east": "securitycraft:blocks/locksmith_workbench_side",
+    "south": "securitycraft:blocks/locksmith_workbench_side",
+    "west": "securitycraft:blocks/locksmith_workbench_side"
+  }
+}

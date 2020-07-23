@@ -1,7 +1,9 @@
 package mods.grissess;
 
 import mods.grissess.proxy.Common;
+import mods.grissess.registry.GuiHandler;
 import mods.grissess.registry.Items;
+import mods.grissess.registry.TileEntities;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,7 +21,10 @@ public class SecurityCraft {
     public static final String NAME = "SecurityCraft";
     public static final String VERSION = "0.1";
 
-    private static Logger logger;
+    @Mod.Instance(MODID)
+    public static SecurityCraft instance;
+
+    public static Logger logger = null;
 
     @SidedProxy(clientSide = "mods.grissess.proxy.Client", serverSide = "mods.grissess.proxy.Server")
     private static Common proxy;
@@ -32,6 +37,8 @@ public class SecurityCraft {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        TileEntities.registerTileEntities(event);
+        GuiHandler.registerGuiHandler();
         proxy.init(event);
     }
 
