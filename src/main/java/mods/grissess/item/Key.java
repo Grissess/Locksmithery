@@ -5,6 +5,7 @@ import mods.grissess.data.KeyBitting;
 import mods.grissess.registry.CreativeTab;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
@@ -14,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Key extends BaseItem {
+public class Key extends ItemWithDescriptor {
     public Key() {
         super();
         setRegistryName("key");
@@ -39,9 +40,9 @@ public class Key extends BaseItem {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        super.getSubItems(tab, items);
         if(isInCreativeTab(tab)) {
-            items.add(new ItemStack(this));
-            ItemStack stack = new ItemStack(this);
+            ItemStack stack = new ItemStack(this, 1, BittingDescriptor.GOLD.ordinal());
             stack.setTagCompound(KeyBitting.OVERRIDE_BITTING.toNBT());
             items.add(stack);
         }
@@ -59,5 +60,9 @@ public class Key extends BaseItem {
         if(!(stack.getItem() instanceof Key)) return null;
         if(!stack.hasTagCompound()) return null;
         return KeyBitting.fromNBT(stack.getTagCompound());
+    }
+
+    public static void setBitting(ItemStack stack, KeyBitting bitting) {
+        stack.setTagCompound(bitting.toNBT());
     }
 }

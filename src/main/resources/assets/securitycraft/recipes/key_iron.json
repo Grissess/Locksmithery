@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii"
+  ],
+  "key": {
+    "i": {"item": "minecraft:iron_nugget"}
+  },
+  "result": {
+    "item": "securitycraft:key",
+    "data": 1
+  }
+}

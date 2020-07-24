@@ -1,12 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " g ",
-    "gcg",
-    " g "
+    "k",
+    "c"
   ],
   "key": {
-    "g": {"item": "minecraft:gold_nugget"},
+    "k": {"item": "securitycraft:key" },
     "c": {"item": "minecraft:crafting_table"}
   },
   "result": {

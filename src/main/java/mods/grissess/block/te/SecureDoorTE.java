@@ -3,10 +3,13 @@ package mods.grissess.block.te;
 import mods.grissess.block.SecureDoor;
 import mods.grissess.data.BittingDescriptor;
 import mods.grissess.data.LocksetBitting;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class SecureDoorTE extends TileEntity {
+public class SecureDoorTE extends TileEntity implements IBittedTE {
     public LocksetBitting bitting;
 
     public SecureDoorTE() {
@@ -41,5 +44,10 @@ public class SecureDoorTE extends TileEntity {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("bitting", bitting.toNBT());
         return super.writeToNBT(compound);
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return false;
     }
 }

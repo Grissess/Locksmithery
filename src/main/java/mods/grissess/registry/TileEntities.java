@@ -1,6 +1,7 @@
 package mods.grissess.registry;
 
 import mods.grissess.block.te.LocksmithWorkbenchTE;
+import mods.grissess.block.te.SecureBlockTE;
 import mods.grissess.block.te.SecureDoorTE;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -13,6 +14,7 @@ public class TileEntities {
     // Called from mod class
     public static void registerTileEntities(FMLInitializationEvent event) {
         GameRegistry.registerTileEntity(SecureDoorTE.class, new ResourceLocation("securitycraft:secure_door_te"));
+        GameRegistry.registerTileEntity(SecureBlockTE.class, new ResourceLocation("securitycraft:secure_block_te"));
         GameRegistry.registerTileEntity(LocksmithWorkbenchTE.class, new ResourceLocation("securitycraft:locksmith_workbench_te"));
     }
 }

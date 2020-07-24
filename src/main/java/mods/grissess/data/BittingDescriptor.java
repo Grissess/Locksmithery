@@ -1,6 +1,7 @@
 package mods.grissess.data;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 
 public enum BittingDescriptor {
     WOOD(4, 4),
@@ -10,6 +11,8 @@ public enum BittingDescriptor {
 
     public static final int MAX_POSITIONS = 8;
     public static final int MAX_SETTINGS = 8;
+
+    public static final BittingDescriptor[] VALUES = values();
 
     public final int positions;
     public final int settings;
@@ -63,5 +66,15 @@ public enum BittingDescriptor {
 
     public static BittingDescriptor fromNBT(NBTTagCompound tag) {
         return fromVariant(tag.getString("variant"));
+    }
+
+    public String formattedName() {
+        switch(this) {
+            case WOOD: return TextFormatting.GOLD + "Wood" + TextFormatting.RESET;
+            case IRON: return TextFormatting.GRAY + "Iron" + TextFormatting.RESET;
+            case GOLD: return TextFormatting.YELLOW + "Gold" + TextFormatting.RESET;
+            case DIAMOND: return TextFormatting.AQUA + "Diamond" + TextFormatting.RESET;
+        }
+        return TextFormatting.BOLD + "" + TextFormatting.RED + "Unlisted: " + toString() + TextFormatting.RESET;
     }
 }

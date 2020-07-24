@@ -4,10 +4,12 @@ import mods.grissess.block.te.SecureDoorTE;
 import mods.grissess.data.LocksetBitting;
 import mods.grissess.registry.Blocks;
 import mods.grissess.registry.CreativeTab;
+import mods.grissess.registry.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
@@ -19,22 +21,18 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class SecureDoorItem extends ItemDoor {
     protected Block block;
 
     public SecureDoorItem() {
         super(Blocks.secure_door);
-        setRegistryName(Blocks.secure_door.getRegistryName());
+        block = Blocks.secure_door;
+        setRegistryName(block.getRegistryName());
+        setUnlocalizedName(block.getUnlocalizedName());
         setCreativeTab(CreativeTab.tab);
-    }
-
-    public LocksetBitting getBitting(ItemStack stack) {
-        if(stack == null) return null;
-        if(stack.getItem() != this) return null;
-        if(!stack.hasTagCompound()) {
-            stack.setTagCompound(LocksetBitting.DEFAULT_BITTING.toNBT());
-        }
-        return LocksetBitting.fromNBT(stack.getTagCompound());
     }
 
     @Override
@@ -55,6 +53,8 @@ public class SecureDoorItem extends ItemDoor {
             }
 
             ItemStack itemstack = player.getHeldItem(hand);
+            LocksetBitting bitting = getBitting(itemstack);
+            if(bitting == null) return EnumActionResult.FAIL;
 
             if (player.canPlayerEdit(pos, facing, itemstack) && this.block.canPlaceBlockAt(worldIn, pos))
             {
@@ -62,7 +62,7 @@ public class SecureDoorItem extends ItemDoor {
                 int i = enumfacing.getFrontOffsetX();
                 int j = enumfacing.getFrontOffsetZ();
                 boolean flag = i < 0 && hitZ < 0.5F || i > 0 && hitZ > 0.5F || j < 0 && hitX > 0.5F || j > 0 && hitX < 0.5F;
-                placeDoor(worldIn, pos, enumfacing, this.block, flag, getBitting(itemstack));
+                placeDoor(worldIn, pos, enumfacing, this.block, flag, bitting);
                 SoundType soundtype = worldIn.getBlockState(pos).getBlock().getSoundType(worldIn.getBlockState(pos), worldIn, pos, player);
                 worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 itemstack.shrink(1);
@@ -104,6 +104,27 @@ public class SecureDoorItem extends ItemDoor {
         worldIn.notifyNeighborsOfStateChange(blockpos2, door, false);
         TileEntity te = worldIn.getTileEntity(pos);
         assert te instanceof SecureDoorTE;
-        ((SecureDoorTE) te).bitting = bitting;
+        ((SecureDoorTE) te).setBitting(bitting);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        if(stack.hasTagCompound()) {
+            tooltip.add("Keyed");
+        } else {
+            tooltip.add("Unkeyed");
+        }
+    }
+
+    public static LocksetBitting getBitting(ItemStack stack) {
+        if(stack == null) return null;
+        if(stack.getItem() != Items.secure_door_item) return null;
+        if(!stack.hasTagCompound()) return null;
+        return LocksetBitting.fromNBT(stack.getTagCompound());
+    }
+
+    public static void setBitting(ItemStack stack, LocksetBitting bitting) {
+        stack.setTagCompound(bitting.toNBT());
     }
 }

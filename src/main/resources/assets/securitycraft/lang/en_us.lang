@@ -1,3 +1,11 @@
 itemGroup.tabSecurityCraft=SecurityCraft
-item.key.name=Key
-item.Secure Door.name=Secure Door
+item.Key.name=Key
+item.Lockset.name=Lockset
+item.Pin.name=Pin
+item.Cylinder.name=Cylinder
+item.Hardened Iron Nugget.name=Hardened Iron Nugget
+item.Hardened Iron Ingot.name=Hardened Iron Ingot
+item.Keyring.name=Keyring
+item.tile.Secure Door.name=Secure Door
+tile.Secure Block.name=Secure Block
+tile.Locksmith Workbench.name=Locksmith Workbench

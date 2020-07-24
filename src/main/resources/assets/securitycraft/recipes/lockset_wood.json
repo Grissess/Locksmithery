@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    " c "
+  ],
+  "key": {
+    "p": {"item": "securitycraft:pin"},
+    "c": {"item": "securitycraft:cylinder", "data": 0 }
+  },
+  "result": {
+    "item": "securitycraft:lockset",
+    "data": 0
+  }
+}

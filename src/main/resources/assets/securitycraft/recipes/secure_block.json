@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HH",
+    "HH"
+  ],
+  "key": {
+    "H": {"item": "securitycraft:hardened_iron_ingot" }
+  },
+  "result": {
+    "item": "securitycraft:secure_block",
+    "count": 4
+  }
+}

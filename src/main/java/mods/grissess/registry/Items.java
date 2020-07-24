@@ -1,9 +1,7 @@
 package mods.grissess.registry;
 
 import mods.grissess.SecurityCraft;
-import mods.grissess.item.Lockset;
-import mods.grissess.item.Key;
-import mods.grissess.item.SecureDoorItem;
+import mods.grissess.item.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -18,14 +16,24 @@ public class Items {
     public static final Key key = new Key();
     public static final Lockset lockset = new Lockset();
     public static final SecureDoorItem secure_door_item = new SecureDoorItem();
+    public static final SecureBlockItem secure_block_item = new SecureBlockItem();
+    public static final Keyring keyring = new Keyring();
 
     public static final Item pin = new Item()
             .setRegistryName("pin")
             .setUnlocalizedName("Pin")
             .setCreativeTab(CreativeTab.tab);
-    public static final Item cylinder = new Item()
+    public static final Item cylinder = new ItemWithDescriptor()
             .setRegistryName("cylinder")
             .setUnlocalizedName("Cylinder")
+            .setCreativeTab(CreativeTab.tab);
+    public static final Item hardened_iron_nugget = new Item()
+            .setRegistryName("hardened_iron_nugget")
+            .setUnlocalizedName("Hardened Iron Nugget")
+            .setCreativeTab(CreativeTab.tab);
+    public static final Item hardened_iron_ingot = new Item()
+            .setRegistryName("hardened_iron_ingot")
+            .setUnlocalizedName("Hardened Iron Ingot")
             .setCreativeTab(CreativeTab.tab);
 
     public static final Item locksmithing_workbench_item = new ItemBlock(Blocks.locksmith_workbench)
@@ -37,9 +45,13 @@ public class Items {
             key,
             lockset,
             secure_door_item,
+            secure_block_item,
+            keyring,
 
             pin,
             cylinder,
+            hardened_iron_nugget,
+            hardened_iron_ingot,
 
             locksmithing_workbench_item,
     };
@@ -50,10 +62,16 @@ public class Items {
         IForgeRegistry<Item> reg = event.getRegistry();
         for(Item item : ITEMS) {
             reg.register(item);
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(
-                    item.getRegistryName(),
-                    "inventory"
-            ));
+            if(item instanceof ICustomModelRegistration) {
+                ((ICustomModelRegistration) item).registerCustomModels(
+                        SecurityCraft.instance.proxy
+                );
+            } else {
+                SecurityCraft.instance.proxy.setModelLocation(item, 0, new ModelResourceLocation(
+                        item.getRegistryName(),
+                        "inventory"
+                ));
+            }
         }
     }
 }

@@ -1,14 +1,18 @@
 package mods.grissess.gui;
 
+import mods.grissess.SecurityCraft;
 import mods.grissess.block.container.LocksmithWorkbenchContainer;
-import mods.grissess.block.inv.LocksmithWorkbenchInventory;
+import mods.grissess.block.te.LocksmithWorkbenchTE;
 import mods.grissess.data.BittingDescriptor;
 import mods.grissess.item.Key;
+import mods.grissess.item.Lockset;
+import mods.grissess.net.Channel;
 import mods.grissess.registry.Items;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @SideOnly(Side.CLIENT)
 public class GuiLocksmithing extends GuiContainer {
@@ -40,8 +45,8 @@ public class GuiLocksmithing extends GuiContainer {
         return set + pos * BittingDescriptor.MAX_SETTINGS;
     }
 
-    public GuiLocksmithing(Container inventorySlotsIn) {
-        super(inventorySlotsIn);
+    public GuiLocksmithing(InventoryPlayer playerInv, LocksmithWorkbenchTE te) {
+        super(new LocksmithWorkbenchContainer(playerInv, te));
     }
 
     public LocksmithWorkbenchContainer getContainer() {
@@ -50,15 +55,18 @@ public class GuiLocksmithing extends GuiContainer {
 
     @Override
     public void initGui() {
+        super.initGui();
+
         buttonList.clear();
+        bittingButtons.clear();
 
         for(int position = 0; position < BittingDescriptor.MAX_POSITIONS; position++) {
             List<GuiButton> innerList = new ArrayList<>(BittingDescriptor.MAX_SETTINGS);
             for(int setting = 0; setting < BittingDescriptor.MAX_SETTINGS; setting++) {
                 GuiButton button = new GuiButton(
                         positionSettingToID(position, setting),
-                        X_GRID_OFFSET + GRID_WIDTH * position,
-                        Y_GRID_OFFSET + GRID_HEIGHT * setting,
+                        guiLeft + X_GRID_OFFSET + GRID_WIDTH * position,
+                        guiTop + Y_GRID_OFFSET + GRID_HEIGHT * setting,
                         GRID_WIDTH, GRID_HEIGHT,
                         "" + setting
                 );
@@ -81,25 +89,33 @@ public class GuiLocksmithing extends GuiContainer {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        ItemStack input = ((LocksmithWorkbenchInventory) getContainer().tileEntity.inventory).getInputStack();
+        ItemStack input = getContainer().tileEntity.getInputStack();
         BittingDescriptor desc = null;
         if(input != null) {
             if(input.getItem() == Items.key) {
-                desc = BittingDescriptor.WOOD;
+                desc = Key.getBittingDescriptor(input);
             }
-            if(input.getItem() == Items.cylinder) {
-                desc = BittingDescriptor.WOOD;
+            if(input.getItem() == Items.lockset) {
+                desc = Lockset.getBittingDescriptor(input);
             }
         }
 
+        LocksmithWorkbenchTE te = getContainer().tileEntity;
         for(int position = 0; position < BittingDescriptor.MAX_POSITIONS; position++) {
+            Set<Integer> cuts = te.getAllCuts(position);
             for(int setting = 0; setting < BittingDescriptor.MAX_SETTINGS; setting++) {
-                bittingButtons.get(position).get(setting).visible =
+                GuiButton button = bittingButtons.get(position).get(setting);
+                button.visible =
                         desc != null && position < desc.positions && setting < desc.settings;
+                button.packedFGColour =
+                        cuts.contains(setting) ? 0xff00 : 0;
+
             }
         }
 
+        drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
     }
 
     @Override
@@ -110,7 +126,23 @@ public class GuiLocksmithing extends GuiContainer {
         if(setting < 0 || setting >= BittingDescriptor.MAX_SETTINGS) return;
 
         LocksmithWorkbenchContainer c = getContainer();
-        int current = c.tileEntity.inventory.getField(position);
-        c.tileEntity.inventory.setField(position, current | (1 << setting));
+        ItemStack inputStack = c.tileEntity.getInputStack();
+        if(inputStack == null) return;
+
+        if(inputStack.getItem() == Items.lockset) {
+            int current = c.tileEntity.getField(position);
+            c.tileEntity.setField(position, current ^ (1 << setting));
+        }
+        if(inputStack.getItem() == Items.key) {
+            c.tileEntity.setField(position, 1 << setting);
+        }
+
+        SecurityCraft.proxy.channel.sendToServer(
+                new Channel.PacketSetCuts(
+                        c.world,
+                        c.position,
+                        c.tileEntity.getCutsAsArray()
+                )
+        );
     }
 }

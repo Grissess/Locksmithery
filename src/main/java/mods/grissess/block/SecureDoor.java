@@ -12,12 +12,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -39,7 +43,8 @@ public class SecureDoor extends BlockDoor {
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new SecureDoorTE(BittingDescriptor.WOOD);
+        // This usually gets reassigned in SecureDoorItem anyway
+        return new SecureDoorTE();
     }
 
     @Override
@@ -50,26 +55,36 @@ public class SecureDoor extends BlockDoor {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(worldIn.isRemote) return true;
-        ItemStack handStack = playerIn.getHeldItem(hand);
-        System.out.println("SD.oBA: player " + playerIn + " hand " + handStack);
-        if(handStack.getItem() instanceof Key) {
-            KeyBitting kb = Key.getBitting(handStack);
-            if(kb != null) {
-                TileEntity te = worldIn.getTileEntity(pos);
-                if (te instanceof SecureDoorTE) {
-                    LocksetBitting lb = ((SecureDoorTE) te).getBitting();
-                    System.out.println("LocksetBitting: " + lb.toString());
-                    if (lb.fits(kb)) {
-                        toggleDoor(worldIn, pos, !isOpen(worldIn, pos));
-                    }
-                }
-            }
+        if(state.getValue(HALF) == EnumDoorHalf.UPPER) pos = pos.down();
+        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, hand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+            toggleDoor(worldIn, pos, !isOpen(worldIn, pos));
         }
         return true;
     }
 
-    // Sorry kinda need to change this
     @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.add(new ItemStack(Items.secure_door_item));
+    }
+
+    @Override
+    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+        if (worldIn.isRemote) return;
+        IBlockState state = worldIn.getBlockState(pos);
+        if (state.getValue(HALF) == EnumDoorHalf.UPPER) pos = pos.down();
+        if (SecureBlockBase.tryUnlock(worldIn, pos, playerIn, playerIn.swingingHand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+            InventoryHelper.spawnItemStack(
+                    worldIn,
+                    pos.getX(), pos.getY(), pos.getZ(),
+                    new ItemStack(Items.secure_door_item)
+            );
+            worldIn.setBlockToAir(pos);
+            worldIn.setBlockToAir(pos.up());
+        }
+    }
+
+        // Sorry kinda need to change this
+        @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         if (state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER)

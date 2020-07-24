@@ -6,9 +6,10 @@
   ],
   "key": {
     "p": {"item": "securitycraft:pin"},
-    "c": {"item": "securitycraft:cylinder"}
+    "c": {"item": "securitycraft:cylinder", "data": 1 }
   },
   "result": {
-    "item": "securitycraft:lockset"
+    "item": "securitycraft:lockset",
+    "data": 1
   }
 }

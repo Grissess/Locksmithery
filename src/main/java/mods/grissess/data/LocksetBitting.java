@@ -6,31 +6,33 @@ import java.util.*;
 
 public class LocksetBitting {
     public final BittingDescriptor descriptor;
-    public Set<Integer>[] pinSets;
+    public List<Set<Integer>> pinSets;
 
     public static final LocksetBitting DEFAULT_BITTING = new LocksetBitting(BittingDescriptor.WOOD, new int[] {0}, new int[] {0}, new int[] {0}, new int[] {0});
 
     public LocksetBitting(BittingDescriptor descriptor, int[]... pinSetArrays) {
         this.descriptor = descriptor;
         assert pinSetArrays.length == descriptor.positions;
-        pinSets = new HashSet[descriptor.positions];
+        pinSets = new ArrayList<>(descriptor.positions);
         for(int i = 0; i < descriptor.positions; i++) {
-            pinSets[i] = new HashSet<>();
+            Set<Integer> set = new HashSet<>();
             for(int j = 0; j < pinSetArrays[i].length; j++) {
-                pinSets[i].add(pinSetArrays[i][j]);
+                set.add(pinSetArrays[i][j]);
             }
+            pinSets.add(set);
         }
     }
 
-    public LocksetBitting(BittingDescriptor descriptor, Set<Integer>[] pinSets) {
+    public LocksetBitting(BittingDescriptor descriptor, List<Set<Integer>> pinSets) {
         this.descriptor = descriptor;
         this.pinSets = pinSets;
     }
 
     public LocksetBitting(BittingDescriptor descriptor) {
-        Set<Integer>[] ps = new HashSet[descriptor.positions];
+        List<Set<Integer>> ps = new ArrayList<>(descriptor.positions);
         for(int i = 0; i < descriptor.positions; i++) {
-            ps[i] = new HashSet<>();
+            Set<Integer> set = new HashSet<>();
+            ps.add(set);
         }
         this.descriptor = descriptor;
         this.pinSets = ps;
@@ -38,15 +40,16 @@ public class LocksetBitting {
 
     public Set<Integer> getPinSets(int idx) {
         if(idx < 0 || idx >= descriptor.positions) return new HashSet<>();
-        return pinSets[idx];
+        return pinSets.get(idx);
     }
 
     public int[] getPinSetsAsArray(int idx) {
-        Integer[] ps = getPinSets(idx).toArray(new Integer[0]);
-        int[] ints = new int[ps.length];
-        for(int i = 0; i < ps.length; i++) {
-            ints[i] = ps[i];
-        }
+        Set<Integer> ps = getPinSets(idx);
+        int[] ints = new int[ps.size()];
+        Iterator<Integer> iter = ps.iterator();
+        int i = 0;
+        while(iter.hasNext())
+            ints[i++] = iter.next();
         return ints;
     }
 
@@ -59,14 +62,14 @@ public class LocksetBitting {
     public void removePin(int idx, int pin) {
         if(idx < 0 || idx >= descriptor.positions) return;
         if(pin < 0 || idx >= descriptor.settings) return;
-        // This might be overcautious, but we definitely want integer equality
-        getPinSets(idx).removeIf(value -> value == pin);
+        getPinSets(idx).remove(pin);
     }
 
     public boolean fits(KeyBitting key) {
         if(key.overrides) return true;
+        if(descriptor != key.descriptor) return false;
         for(int i = 0; i < descriptor.positions; i++) {
-            if(!pinSets[i].contains(key.getPin(i))) return false;
+            if(!pinSets.get(i).contains(key.getPin(i))) return false;
         }
         return true;
     }
@@ -89,15 +92,16 @@ public class LocksetBitting {
             for (int j = 0; j < psi.length; j++) {
                 ps.add(psi[j]);
             }
+            list.add(ps);
         }
-        return new LocksetBitting(desc, list.toArray(new Set[0]));
+        return new LocksetBitting(desc, list);
     }
 
     @Override
     public String toString() {
         return "LocksetBitting{" +
                 "descriptor=" + descriptor +
-                ", pinSets=" + Arrays.toString(pinSets) +
+                ", pinSets=" + pinSets +
                 '}';
     }
 }

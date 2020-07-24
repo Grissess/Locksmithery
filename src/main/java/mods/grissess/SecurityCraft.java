@@ -27,7 +27,7 @@ public class SecurityCraft {
     public static Logger logger = null;
 
     @SidedProxy(clientSide = "mods.grissess.proxy.Client", serverSide = "mods.grissess.proxy.Server")
-    private static Common proxy;
+    public static Common proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {

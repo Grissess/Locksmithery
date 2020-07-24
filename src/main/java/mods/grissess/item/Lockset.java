@@ -4,6 +4,7 @@ import mods.grissess.data.LocksetBitting;
 import mods.grissess.registry.CreativeTab;
 import mods.grissess.registry.Items;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -11,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Lockset extends BaseItem {
+public class Lockset extends ItemWithDescriptor {
     public Lockset() {
         super();
         setRegistryName("lockset");
@@ -24,17 +25,10 @@ public class Lockset extends BaseItem {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if(stack.hasTagCompound()) {
             LocksetBitting bitting = LocksetBitting.fromNBT(stack.getTagCompound());
-            tooltip.add("Cut: " + Arrays.toString(bitting.pinSets));
+            tooltip.add("Cut: " + bitting.pinSets);
         } else {
             tooltip.add("Uncut");
         }
-    }
-
-    @Override
-    public boolean hasEffect(ItemStack stack) {
-        LocksetBitting bitting = getBitting(stack);
-        if(bitting != null) return true;
-        return super.hasEffect(stack);
     }
 
     public static LocksetBitting getBitting(ItemStack stack) {
@@ -42,5 +36,9 @@ public class Lockset extends BaseItem {
         if(stack.getItem() != Items.lockset) return null;
         if(!stack.hasTagCompound()) return null;
         return LocksetBitting.fromNBT(stack.getTagCompound());
+    }
+
+    public static void setBitting(ItemStack stack, LocksetBitting bitting) {
+        stack.setTagCompound(bitting.toNBT());
     }
 }

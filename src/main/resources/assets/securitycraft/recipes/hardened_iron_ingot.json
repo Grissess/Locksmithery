@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "hhh",
+    "hhh",
+    "hhh"
+  ],
+  "key": {
+    "h": {"item": "securitycraft:hardened_iron_nugget"}
+  },
+  "result": {
+    "item": "securitycraft:hardened_iron_ingot"
+  }
+}

@@ -10,14 +10,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
 public class ItemRenderer {
     @Mod.EventHandler
     public static void registerRenders(ModelRegistryEvent event) {
         SecurityCraft.logger.info("Registering custom models...");
         for(Item item : Items.ITEMS) {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation("minecraft", "bucket"), "inventory"));
+            SecurityCraft.instance.proxy.setModelLocation(item, 0, new ModelResourceLocation(new ResourceLocation("minecraft", "bucket"), "inventory"));
         }
     }
 }
