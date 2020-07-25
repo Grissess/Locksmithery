@@ -15,6 +15,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemWithDescriptor extends Item implements ICustomModelRegistration {
+    public ItemWithDescriptor() {
+        super();
+        setHasSubtypes(true);
+    }
+
     @Override
     public void registerCustomModels(Common proxy) {
         for(BittingDescriptor desc: BittingDescriptor.VALUES) {

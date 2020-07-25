@@ -118,7 +118,7 @@ public class LocksmithWorkbenchContainer extends Container {
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return (
                 super.canMergeSlot(stack, slotIn) &&
-                slotIn.inventory != tileEntity
+                slotIn.slotNumber != 1
         );
     }
 
@@ -127,19 +127,40 @@ public class LocksmithWorkbenchContainer extends Container {
         Slot slot = inventorySlots.get(index);
         if(slot == null || !slot.getHasStack()) return ItemStack.EMPTY;
         ItemStack stack = slot.getStack();
-        ItemStack newStack = stack.copy();
+        ItemStack oldStack = stack.copy();
 
         if(index == 0) {  // The input slot
-            if (!mergeItemStack(newStack, 2, 37, false))
+            if (!mergeItemStack(stack, 2, 38, false))
                 return ItemStack.EMPTY;
         } else if(index == 1) {  // The output slot
-            if (!mergeItemStack(newStack, 2, 37, false))
+            if (!mergeItemStack(stack, 2, 38, false))
                 return ItemStack.EMPTY;
+
+            // In the particular case of the output, also remove an equivalent
+            // amount of inputs
+            Slot inputSlot = inventorySlots.get(0);
+            if(stack.isEmpty()) {
+                inventorySlots.get(0).putStack(ItemStack.EMPTY);
+            } else if(inputSlot.getHasStack()) {
+                ItemStack inputStack = inputSlot.getStack();
+                if(inputStack != null) {
+                    inputStack.shrink(oldStack.getCount() - stack.getCount());
+                }
+            }
         } else {  // Anywhere in the player inventory
-            if (!mergeItemStack(newStack, 0, 0, false))
+            // For simplicity, only support moving to the input slot
+            if (!mergeItemStack(stack, 0, 1, false))
                 return ItemStack.EMPTY;
         }
 
-        return newStack;
+        if(stack.isEmpty()) {
+            slot.putStack(ItemStack.EMPTY);
+            if (index == 1) {
+            }
+        } else {
+            slot.onSlotChanged();
+        }
+
+        return oldStack;
     }
 }

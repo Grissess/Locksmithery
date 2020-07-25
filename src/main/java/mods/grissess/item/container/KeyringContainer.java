@@ -63,4 +63,28 @@ public class KeyringContainer extends Container {
         playerInv.mainInventory.set(keyringSlot, newRing);
         super.onContainerClosed(playerIn);
     }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        Slot slot = inventorySlots.get(index);
+        if(slot == null || !slot.getHasStack()) return ItemStack.EMPTY;
+        ItemStack stack = slot.getStack();
+        ItemStack oldStack = stack.copy();
+
+        if(index < ROWS * 9) {  // Within the keyring inventory
+            if (!mergeItemStack(stack, ROWS * 9, 36 + ROWS * 9, false))
+                return ItemStack.EMPTY;
+        } else {  // Within the player inventory
+            if (!mergeItemStack(stack, 0, ROWS * 9, false))
+                return ItemStack.EMPTY;
+        }
+
+        if(stack.isEmpty()) {
+            slot.putStack(ItemStack.EMPTY);
+        } else {
+            slot.onSlotChanged();
+        }
+
+        return oldStack;
+    }
 }
