@@ -103,6 +103,7 @@ public class SecureDoorItem extends ItemDoor {
         worldIn.notifyNeighborsOfStateChange(pos, door, false);
         worldIn.notifyNeighborsOfStateChange(blockpos2, door, false);
         TileEntity te = worldIn.getTileEntity(pos);
+        System.out.println("SDI.pD: door @ " + pos + " te " + te);
         assert te instanceof SecureDoorTE;
         ((SecureDoorTE) te).setBitting(bitting);
     }

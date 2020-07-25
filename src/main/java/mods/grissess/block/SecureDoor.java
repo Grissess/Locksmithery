@@ -17,9 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -27,6 +25,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class SecureDoor extends BlockDoor {
+    public ResourceLocation DOOR_LOCKED_RESOURCE = new ResourceLocation("securitycraft", "door_locked");
+    public SoundEvent DOOR_LOCKED_SOUND = new SoundEvent(DOOR_LOCKED_RESOURCE);
+
     public SecureDoor() {
         super(Material.IRON);
         setUnlocalizedName("Secure Door");
@@ -56,8 +57,14 @@ public class SecureDoor extends BlockDoor {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(worldIn.isRemote) return true;
         if(state.getValue(HALF) == EnumDoorHalf.UPPER) pos = pos.down();
+        if(isOpen(worldIn, pos)) {
+            toggleDoor(worldIn, pos, false);
+            return true;
+        }
         if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, hand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
-            toggleDoor(worldIn, pos, !isOpen(worldIn, pos));
+            toggleDoor(worldIn, pos, true);
+        } else {
+            worldIn.playSound(null, pos, DOOR_LOCKED_SOUND, SoundCategory.BLOCKS, 0.3f, 0.9f + 0.2f * worldIn.rand.nextFloat());
         }
         return true;
     }
@@ -129,6 +136,22 @@ public class SecureDoor extends BlockDoor {
                 if (!worldIn.isRemote)
                 {
                     this.dropBlockAsItem(worldIn, pos, state, 0);
+                }
+            }
+            else
+            {
+                boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(blockpos1);
+
+                if (blockIn != this && (flag || blockIn.getDefaultState().canProvidePower()) && flag != ((Boolean)iblockstate1.getValue(POWERED)).booleanValue())
+                {
+                    worldIn.setBlockState(blockpos1, iblockstate1.withProperty(POWERED, Boolean.valueOf(flag)), 2);
+
+                    if (state.getValue(OPEN) && !flag)
+                    {
+                        worldIn.setBlockState(pos, state.withProperty(OPEN, false), 2);
+                        worldIn.markBlockRangeForRenderUpdate(pos, pos);
+                        worldIn.playEvent(null, 1011, pos, 0);
+                    }
                 }
             }
         }

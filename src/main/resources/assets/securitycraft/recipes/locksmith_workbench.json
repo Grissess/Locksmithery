@@ -5,7 +5,7 @@
     "c"
   ],
   "key": {
-    "k": {"item": "securitycraft:key" },
+    "k": {"item": "securitycraft:key", "data": 0 },
     "c": {"item": "minecraft:crafting_table"}
   },
   "result": {
