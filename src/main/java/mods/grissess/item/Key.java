@@ -2,7 +2,9 @@ package mods.grissess.item;
 
 import mods.grissess.data.BittingDescriptor;
 import mods.grissess.data.KeyBitting;
+import mods.grissess.proxy.Common;
 import mods.grissess.registry.CreativeTab;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -24,6 +26,14 @@ public class Key extends ItemWithDescriptor {
     }
 
     @Override
+    public void registerCustomModels(Common proxy) {
+        super.registerCustomModels(proxy);
+        proxy.setModelLocation(this, BittingDescriptor.VALUES.length,
+                new ModelResourceLocation("securitycraft:key_creative", "inventory")
+        );
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         KeyBitting bitting = getBitting(stack);
@@ -42,7 +52,7 @@ public class Key extends ItemWithDescriptor {
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         super.getSubItems(tab, items);
         if(isInCreativeTab(tab)) {
-            ItemStack stack = new ItemStack(this, 1, BittingDescriptor.GOLD.ordinal());
+            ItemStack stack = new ItemStack(this, 1, BittingDescriptor.VALUES.length);
             stack.setTagCompound(KeyBitting.OVERRIDE_BITTING.toNBT());
             items.add(stack);
         }
