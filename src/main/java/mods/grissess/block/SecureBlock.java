@@ -48,8 +48,8 @@ public class SecureBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, hand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, playerIn.swingingHand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
             if(!worldIn.isRemote) {
                 InventoryHelper.spawnItemStack(
                         worldIn,
@@ -58,8 +58,6 @@ public class SecureBlock extends Block {
                 );
                 worldIn.setBlockToAir(pos);
             }
-            return true;
         }
-        return false;
     }
 }

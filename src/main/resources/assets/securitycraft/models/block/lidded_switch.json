@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "particle": "#main",
+    "main": "securitycraft:entity/liddedswitch/lid"
+  },
+  "elements": []
+}

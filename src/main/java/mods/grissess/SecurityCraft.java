@@ -39,6 +39,7 @@ public class SecurityCraft {
     public void init(FMLInitializationEvent event) {
         TileEntities.registerTileEntities(event);
         GuiHandler.registerGuiHandler();
+        proxy.registerTESRs(event);
         proxy.init(event);
     }
 

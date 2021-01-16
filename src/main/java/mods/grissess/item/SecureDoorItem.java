@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SecureDoorItem extends ItemDoor {
+public class SecureDoorItem extends ItemDoor implements ILocksetItem {
     protected Block block;
 
     public SecureDoorItem() {
@@ -53,7 +53,7 @@ public class SecureDoorItem extends ItemDoor {
             }
 
             ItemStack itemstack = player.getHeldItem(hand);
-            LocksetBitting bitting = getBitting(itemstack);
+            LocksetBitting bitting = ILocksetItem.getBitting(itemstack);
             if(bitting == null) return EnumActionResult.FAIL;
 
             if (player.canPlayerEdit(pos, facing, itemstack) && this.block.canPlaceBlockAt(worldIn, pos))
@@ -116,16 +116,5 @@ public class SecureDoorItem extends ItemDoor {
         } else {
             tooltip.add("Unkeyed");
         }
-    }
-
-    public static LocksetBitting getBitting(ItemStack stack) {
-        if(stack == null) return null;
-        if(stack.getItem() != Items.secure_door_item) return null;
-        if(!stack.hasTagCompound()) return null;
-        return LocksetBitting.fromNBT(stack.getTagCompound());
-    }
-
-    public static void setBitting(ItemStack stack, LocksetBitting bitting) {
-        stack.setTagCompound(bitting.toNBT());
     }
 }

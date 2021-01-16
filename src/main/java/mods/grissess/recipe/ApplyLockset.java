@@ -1,5 +1,6 @@
 package mods.grissess.recipe;
 
+import mods.grissess.item.ILocksetItem;
 import mods.grissess.item.Lockset;
 import mods.grissess.item.SecureBlockItem;
 import mods.grissess.item.SecureDoorItem;
@@ -24,10 +25,7 @@ public class ApplyLockset extends IForgeRegistryEntry.Impl<IRecipe> implements I
     public ItemStack findApplicableItem(InventoryCrafting inv) {
         for(int slot = 0; slot < inv.getSizeInventory(); slot++) {
             ItemStack stack = inv.getStackInSlot(slot);
-            if(stack != null && (
-                    stack.getItem() == Items.secure_door_item ||
-                    stack.getItem() == Items.secure_block_item
-            )) return stack;
+            if(stack != null && (stack.getItem() instanceof ILocksetItem)) return stack;
         }
         return null;
     }
@@ -54,12 +52,7 @@ public class ApplyLockset extends IForgeRegistryEntry.Impl<IRecipe> implements I
 
         output = output.copy();
         output.setCount(1);
-        if(output.getItem() == Items.secure_door_item) {
-            SecureDoorItem.setBitting(output, Lockset.getBitting(lockset));
-        }
-        if(output.getItem() == Items.secure_block_item) {
-            SecureBlockItem.setBitting(output, Lockset.getBitting(lockset));
-        }
+        ILocksetItem.setBitting(output, Lockset.getBitting(lockset));
         return output;
     }
 

@@ -155,8 +155,6 @@ public class LocksmithWorkbenchContainer extends Container {
 
         if(stack.isEmpty()) {
             slot.putStack(ItemStack.EMPTY);
-            if (index == 1) {
-            }
         } else {
             slot.onSlotChanged();
         }

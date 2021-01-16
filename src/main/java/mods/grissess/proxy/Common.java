@@ -34,4 +34,6 @@ public class Common {
     public void postInit(FMLPostInitializationEvent event) {}
 
     public void setModelLocation(Item _item, int _metadata, ModelResourceLocation _loc) {}
+
+    public void registerTESRs(FMLInitializationEvent init) {}
 }
