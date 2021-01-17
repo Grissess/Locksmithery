@@ -19,9 +19,15 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class LocksmithWorkbenchTE extends TileEntity implements IInventory {
@@ -242,5 +248,21 @@ public class LocksmithWorkbenchTE extends TileEntity implements IInventory {
     @Override
     public boolean hasCustomName() {
         return false;
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+    }
+
+    protected IItemHandler itemHandler = null;
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return (T) (itemHandler == null ? itemHandler = new InvWrapper(this) : itemHandler);
+        return super.getCapability(capability, facing);
     }
 }

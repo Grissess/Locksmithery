@@ -20,6 +20,7 @@ public class Items {
     public static final Keyring keyring = new Keyring();
     public static final LiddedSwitchItem lidded_button_item = new LiddedSwitchItem(Blocks.lidded_button);
     public static final LiddedSwitchItem lidded_lever_item = new LiddedSwitchItem(Blocks.lidded_lever);
+    public static final CoreExtractor core_extractor = new CoreExtractor();
 
     public static final Item pin = new Item()
             .setRegistryName("pin")
@@ -51,6 +52,7 @@ public class Items {
             keyring,
             lidded_button_item,
             lidded_lever_item,
+            core_extractor,
 
             pin,
             cylinder,
