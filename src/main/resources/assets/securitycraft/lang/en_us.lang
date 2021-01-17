@@ -9,3 +9,5 @@ item.Keyring.name=Keyring
 item.tile.Secure Door.name=Secure Door
 tile.Secure Block.name=Secure Block
 tile.Locksmith Workbench.name=Locksmith Workbench
+tile.Lidded Lever.name=Lidded Lever
+tile.Lidded Button.name=Lidded Button

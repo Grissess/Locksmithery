@@ -30,8 +30,10 @@ public class LiddedSwitch extends Block {
     public static final PropertyBool POWERED = PropertyBool.create("powered");
     public static final PropertyBool OPEN = PropertyBool.create("open");
 
-    public static final AxisAlignedBB OPEN_BB = new AxisAlignedBB(0.125, 0.0, 0.25, 0.875, 0.5, 0.75);
-    public static final AxisAlignedBB CLOSED_BB = new AxisAlignedBB(0.125, 0.0, 0.25, 0.875, 0.375, 0.75);
+    public static final AxisAlignedBB OPEN_BB_X = new AxisAlignedBB(0.125, 0.0, 0.25, 0.875, 0.75, 0.75);
+    public static final AxisAlignedBB CLOSED_BB_X = new AxisAlignedBB(0.125, 0.0, 0.25, 0.875, 0.375, 0.75);
+    public static final AxisAlignedBB OPEN_BB_Z = new AxisAlignedBB(0.25, 0.0, 0.125, 0.75, 0.75, 0.875);
+    public static final AxisAlignedBB CLOSED_BB_Z = new AxisAlignedBB(0.25, 0.0, 0.125, 0.75, 0.375, 0.875);
 
     // TODO: distinct sound
     public static final SoundEvent LOCKED_SOUND = new SoundEvent(new ResourceLocation("securitycraft", "door_locked"));
@@ -60,8 +62,11 @@ public class LiddedSwitch extends Block {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState()
-                .withProperty(DIRECTION, facing);
+        IBlockState state = getDefaultState();
+        if(placer != null) {
+            state = state.withProperty(DIRECTION, placer.getHorizontalFacing());
+        }
+        return state;
     }
 
     @Override
@@ -129,7 +134,9 @@ public class LiddedSwitch extends Block {
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return state.getValue(OPEN) ? OPEN_BB : CLOSED_BB;
+        return state.getValue(DIRECTION).getAxis() == EnumFacing.Axis.Z ?
+                (state.getValue(OPEN) ? OPEN_BB_X : CLOSED_BB_X) :
+                (state.getValue(OPEN) ? OPEN_BB_Z : CLOSED_BB_Z);
     }
 
     @Override

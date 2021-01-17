@@ -23,15 +23,31 @@ public class LiddedSwitchTESR extends TileEntitySpecialRenderer<LiddedSwitchTE> 
         GlStateManager.depthFunc(GL11.GL_LEQUAL);
         GlStateManager.depthMask(true);
 
-        boolean open = true, powered = false;
-        if(te.hasWorld()) {
-            IBlockState state = te.getWorld().getBlockState(te.getPos());
-            open = state.getValue(LiddedSwitch.OPEN);
-            powered = state.getValue(LiddedSwitch.POWERED);
-        }
+        float open = te.open + (te.open - te.prevOpen) * partialTicks;
+        float powered = te.powered + (te.powered - te.prevPowered) * partialTicks;
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
+        if(te.hasWorld()) {
+            switch(te.getWorld().getBlockState(te.getPos()).getValue(LiddedSwitch.DIRECTION).getHorizontalIndex()) {
+                default: break;
+                case 1:
+                    GlStateManager.translate(0.5f, 0.5f, 0.5f);
+                    GlStateManager.rotate(-90f, 0f, 1f, 0f);
+                    GlStateManager.translate(-0.5f, -0.5f, -0.5f);
+                    break;
+                case 2:
+                    GlStateManager.translate(0.5f, 0.5f, 0.5f);
+                    GlStateManager.rotate(180f, 0f, 1f, 0f);
+                    GlStateManager.translate(-0.5f, -0.5f, -0.5f);
+                    break;
+                case 3:
+                    GlStateManager.translate(0.5f, 0.5f, 0.5f);
+                    GlStateManager.rotate(90f, 0f, 1f, 0f);
+                    GlStateManager.translate(-0.5f, -0.5f, -0.5f);
+                    break;
+            }
+        }
         MODEL.renderAll(rendererDispatcher.renderEngine, ((LiddedSwitch)te.getBlockType()).toggle, open, powered);
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
