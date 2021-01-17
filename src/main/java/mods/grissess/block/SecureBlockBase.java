@@ -22,6 +22,12 @@ public class SecureBlockBase {
         INVALID, FAILED, SUCCEEDED
     }
 
+    public static TryUnlock tryUnlock(World world, BlockPos pos, EntityPlayer player) {
+        return tryUnlockWith(world, pos, player.getHeldItem(
+                player.swingingHand == null ? EnumHand.MAIN_HAND : player.swingingHand
+        ));
+    }
+
     public static TryUnlock tryUnlock(World world, BlockPos pos, EntityPlayer player, EnumHand hand) {
         return tryUnlockWith(world, pos, player.getHeldItem(hand));
     }

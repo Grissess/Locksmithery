@@ -128,8 +128,8 @@ public class CaptiveKeyHolder extends Block {
 
     @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
-        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, playerIn.swingingHand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
-            if(worldIn.isRemote) {
+        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+            if(!worldIn.isRemote) {
                 InventoryHelper.spawnItemStack(
                         worldIn,
                         pos.getX(), pos.getY(), pos.getZ(),
@@ -185,5 +185,15 @@ public class CaptiveKeyHolder extends Block {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+        return blockState.getValue(HAS_KEY) ? 15 : 0;
     }
 }

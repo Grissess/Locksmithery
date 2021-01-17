@@ -22,9 +22,6 @@ public class CoreExtractorRender extends TileEntityItemStackRenderer {
         partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
         GlStateManager.translate(0.5f, 0.5f, 0.5f);
 
-        if(firstFrame)
-            System.out.println("CER.rBI: first frame");
-
         IBakedModel model = Minecraft.getMinecraft()
                 .getRenderItem()
                 .getItemModelWithOverrides(stack, null, null);
@@ -55,8 +52,6 @@ public class CoreExtractorRender extends TileEntityItemStackRenderer {
                     .getRenderItem()
                     .renderItem(stack, flipped_model);
         } else {
-            if(frames++ % 200 == 0)
-                System.out.println("CER.rBI: rendered in normal context: " + mdl.transformType);
             Minecraft.getMinecraft()
                     .getRenderItem()
                     .renderItem(stack, mdl.delegate);

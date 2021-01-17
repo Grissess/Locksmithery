@@ -73,8 +73,8 @@ public class LiddedSwitch extends Block {
 
     @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
-        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn, playerIn.swingingHand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
-            if(worldIn.isRemote) {
+        if(SecureBlockBase.tryUnlock(worldIn, pos, playerIn) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+            if(!worldIn.isRemote) {
                 InventoryHelper.spawnItemStack(
                         worldIn,
                         pos.getX(), pos.getY(), pos.getZ(),

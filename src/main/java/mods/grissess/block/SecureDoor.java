@@ -81,7 +81,7 @@ public class SecureDoor extends BlockDoor {
         if (worldIn.isRemote) return;
         IBlockState state = worldIn.getBlockState(pos);
         if (state.getValue(HALF) == EnumDoorHalf.UPPER) pos = pos.down();
-        if (SecureBlockBase.tryUnlock(worldIn, pos, playerIn, playerIn.swingingHand) == SecureBlockBase.TryUnlock.SUCCEEDED) {
+        if (SecureBlockBase.tryUnlock(worldIn, pos, playerIn) == SecureBlockBase.TryUnlock.SUCCEEDED) {
             InventoryHelper.spawnItemStack(
                     worldIn,
                     pos.getX(), pos.getY(), pos.getZ(),
