@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {"when": {"direction": "up"}, "apply": {"model": "securitycraft:captive_key_holder"}},
+    {"when": {"direction": "down"}, "apply": {"model": "securitycraft:captive_key_holder", "x": 180}},
+    {"when": {"direction": "east"}, "apply": {"model": "securitycraft:captive_key_holder", "x": 90, "y": 90}},
+    {"when": {"direction": "west"}, "apply": {"model": "securitycraft:captive_key_holder", "x": 90, "y": 270}},
+    {"when": {"direction": "south"}, "apply": {"model": "securitycraft:captive_key_holder", "x": 90, "y": 180}},
+    {"when": {"direction": "north"}, "apply": {"model": "securitycraft:captive_key_holder", "x": 90}},
+
+    {"when": {"powered": "true", "direction": "up"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on"}},
+    {"when": {"powered": "true", "direction": "down"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on", "x": 180}},
+    {"when": {"powered": "true", "direction": "east"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on", "x": 90, "y": 90}},
+    {"when": {"powered": "true", "direction": "west"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on", "x": 90, "y": 270}},
+    {"when": {"powered": "true", "direction": "south"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on", "x": 90, "y": 180}},
+    {"when": {"powered": "true", "direction": "north"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_on", "x": 90}},
+
+    {"when": {"powered": "false", "direction": "up"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off"}},
+    {"when": {"powered": "false", "direction": "down"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off", "x": 180}},
+    {"when": {"powered": "false", "direction": "east"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off", "x": 90, "y": 90}},
+    {"when": {"powered": "false", "direction": "west"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off", "x": 90, "y": 270}},
+    {"when": {"powered": "false", "direction": "south"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off", "x": 90, "y": 180}},
+    {"when": {"powered": "false", "direction": "north"}, "apply": {"model": "securitycraft:captive_key_holder_indicator_off", "x": 90}},
+
+    {"when": {"has_key": "true", "direction": "up"}, "apply": {"model": "securitycraft:captive_key_holder_key"}},
+    {"when": {"has_key": "true", "direction": "down"}, "apply": {"model": "securitycraft:captive_key_holder_key", "x": 180}},
+    {"when": {"has_key": "true", "direction": "east"}, "apply": {"model": "securitycraft:captive_key_holder_key", "x": 90, "y": 90}},
+    {"when": {"has_key": "true", "direction": "west"}, "apply": {"model": "securitycraft:captive_key_holder_key", "x": 90, "y": 270}},
+    {"when": {"has_key": "true", "direction": "south"}, "apply": {"model": "securitycraft:captive_key_holder_key", "x": 90, "y": 180}},
+    {"when": {"has_key": "true", "direction": "north"}, "apply": {"model": "securitycraft:captive_key_holder_key", "x": 90}}
+  ]
+}

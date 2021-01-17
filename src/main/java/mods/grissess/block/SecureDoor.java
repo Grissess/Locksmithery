@@ -5,6 +5,7 @@ import mods.grissess.data.BittingDescriptor;
 import mods.grissess.data.KeyBitting;
 import mods.grissess.data.LocksetBitting;
 import mods.grissess.item.Key;
+import mods.grissess.registry.CreativeTab;
 import mods.grissess.registry.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -34,6 +35,7 @@ public class SecureDoor extends BlockDoor {
         setRegistryName("secure_door");
         setBlockUnbreakable();
         setResistance(6000000f);
+        setCreativeTab(CreativeTab.tab);
     }
 
     @Override

@@ -32,6 +32,7 @@ public class SecurityCraft {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
+        proxy.registerModelLoaders(event);
         proxy.preInit(event);
     }
 

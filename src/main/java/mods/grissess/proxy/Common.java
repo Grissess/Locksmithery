@@ -1,8 +1,10 @@
 package mods.grissess.proxy;
 
+import mods.grissess.item.render.TransformCachingModel;
 import mods.grissess.net.Channel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -36,4 +38,10 @@ public class Common {
     public void setModelLocation(Item _item, int _metadata, ModelResourceLocation _loc) {}
 
     public void registerTESRs(FMLInitializationEvent init) {}
+    public void registerModelLoaders(FMLPreInitializationEvent preInit) {
+        System.out.println("Common: registered model loaders");
+        ModelLoaderRegistry.registerLoader(
+                TransformCachingModel.Loader.INSTANCE
+        );
+    }
 }

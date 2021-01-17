@@ -4,6 +4,7 @@ import mods.grissess.block.te.SecureBlockTE;
 import mods.grissess.data.KeyBitting;
 import mods.grissess.data.LocksetBitting;
 import mods.grissess.item.Key;
+import mods.grissess.registry.CreativeTab;
 import mods.grissess.registry.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,6 +30,7 @@ public class SecureBlock extends Block {
         setRegistryName("secure_block");
         setBlockUnbreakable();
         setResistance(6000000f);
+        setCreativeTab(CreativeTab.tab);
     }
 
     @Override

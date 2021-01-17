@@ -1,5 +1,6 @@
 package mods.grissess.proxy;
 
+import mods.grissess.item.render.TransformCachingModel;
 import mods.grissess.registry.TileEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -8,6 +9,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.resource.IResourceType;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

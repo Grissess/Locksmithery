@@ -1,9 +1,6 @@
 package mods.grissess.registry;
 
-import mods.grissess.block.LiddedSwitch;
-import mods.grissess.block.LocksmithWorkbench;
-import mods.grissess.block.SecureBlock;
-import mods.grissess.block.SecureDoor;
+import mods.grissess.block.*;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +13,8 @@ public class Blocks {
     public static final LocksmithWorkbench locksmith_workbench = new LocksmithWorkbench();
     public static final LiddedSwitch lidded_button = new LiddedSwitch(false);
     public static final LiddedSwitch lidded_lever = new LiddedSwitch(true);
+    public static final CaptiveKeyHolder captive_key_latch = new CaptiveKeyHolder(false);
+    public static final CaptiveKeyHolder captive_key_switch = new CaptiveKeyHolder(true);
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -24,7 +23,9 @@ public class Blocks {
                 secure_block,
                 locksmith_workbench,
                 lidded_button,
-                lidded_lever
+                lidded_lever,
+                captive_key_latch,
+                captive_key_switch
         );
     }
 }

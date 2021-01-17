@@ -1,10 +1,7 @@
 package mods.grissess.registry;
 
 import mods.grissess.block.render.LiddedSwitchTESR;
-import mods.grissess.block.te.LiddedSwitchTE;
-import mods.grissess.block.te.LocksmithWorkbenchTE;
-import mods.grissess.block.te.SecureBlockTE;
-import mods.grissess.block.te.SecureDoorTE;
+import mods.grissess.block.te.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -21,7 +18,8 @@ public class TileEntities {
         GameRegistry.registerTileEntity(SecureDoorTE.class, new ResourceLocation("securitycraft:secure_door_te"));
         GameRegistry.registerTileEntity(SecureBlockTE.class, new ResourceLocation("securitycraft:secure_block_te"));
         GameRegistry.registerTileEntity(LocksmithWorkbenchTE.class, new ResourceLocation("securitycraft:locksmith_workbench_te"));
-        GameRegistry.registerTileEntity(LiddedSwitchTE.class, new ResourceLocation("securitycraft:lidded_switch"));
+        GameRegistry.registerTileEntity(LiddedSwitchTE.class, new ResourceLocation("securitycraft:lidded_switch_te"));
+        GameRegistry.registerTileEntity(CaptiveKeyHolderTE.class, new ResourceLocation("securitycraft:captive_key_holder_te"));
     }
 
     @SideOnly(Side.CLIENT)

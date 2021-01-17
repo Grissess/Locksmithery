@@ -1,6 +1,7 @@
 package mods.grissess.block;
 
 import mods.grissess.block.te.LiddedSwitchTE;
+import mods.grissess.registry.CreativeTab;
 import mods.grissess.registry.Items;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -58,6 +59,7 @@ public class LiddedSwitch extends Block {
                 .withProperty(POWERED, false)
                 .withProperty(OPEN, false)
         );
+        setCreativeTab(CreativeTab.tab);
     }
 
     @Override
@@ -167,7 +169,7 @@ public class LiddedSwitch extends Block {
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[]{DIRECTION, OPEN, POWERED});
+        return new BlockStateContainer(this, DIRECTION, OPEN, POWERED);
     }
 
     @Override

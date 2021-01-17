@@ -40,6 +40,7 @@ public class LiddedSwitchItem extends ItemBlock implements ILocksetItem {
         if (!super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState))
             return false;
         LiddedSwitchTE lte = (LiddedSwitchTE) world.getTileEntity(pos);
+        assert lte != null;
         lte.setBitting(ILocksetItem.getBitting(stack));
         return true;
     }
