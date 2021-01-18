@@ -80,7 +80,10 @@ public class TransformCachingModel implements IModel {
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
             transformType = cameraTransformType;
             Pair<? extends IBakedModel, Matrix4f> result = delegate.handlePerspective(cameraTransformType);
-            return Pair.of(new Baked(result.getLeft()), result.getRight());
+            IBakedModel resultModel = this;
+            if(result.getLeft() != delegate)
+                resultModel = new Baked(result.getLeft());
+            return Pair.of(resultModel, result.getRight());
         }
     }
 
