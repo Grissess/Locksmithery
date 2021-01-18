@@ -11,3 +11,6 @@ tile.Secure Block.name=Secure Block
 tile.Locksmith Workbench.name=Locksmith Workbench
 tile.Lidded Lever.name=Lidded Lever
 tile.Lidded Button.name=Lidded Button
+tile.Captive Key Latch.name=Captive Key Latch
+tile.Captive Key Switch.name=Captive Key Switch
+item.Core Extractor.name=Core Extractor

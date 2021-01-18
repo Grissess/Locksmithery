@@ -35,7 +35,7 @@ public class CoreExtractorRender extends TileEntityItemStackRenderer {
             if(flipped_model == null) {
                 try {
                     IModel flipped = ModelLoaderRegistry.getModel(
-                            new ResourceLocation("securitycraft", "item/core_extractor")
+                            new ResourceLocation("securitycraft", "item/core_extractor_flipped")
                     );
                     flipped_model = flipped.bake(
                             flipped.getDefaultState(),
@@ -47,7 +47,6 @@ public class CoreExtractorRender extends TileEntityItemStackRenderer {
                     e.printStackTrace();
                 }
             }
-            GlStateManager.scale(-1f, 1f, 1f);
             Minecraft.getMinecraft()
                     .getRenderItem()
                     .renderItem(stack, flipped_model);

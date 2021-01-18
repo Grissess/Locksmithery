@@ -6,7 +6,9 @@ import mods.grissess.item.render.CoreExtractorRender;
 import mods.grissess.proxy.Common;
 import mods.grissess.registry.CreativeTab;
 import mods.grissess.registry.Items;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
@@ -14,7 +16,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class CoreExtractor extends Item implements ICustomModelRegistration {
     public CoreExtractor() {
@@ -35,6 +41,7 @@ public class CoreExtractor extends Item implements ICustomModelRegistration {
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         TileEntity te = world.getTileEntity(pos);
         if(te != null && (te instanceof IBittedTE)) {
+            if(world.isRemote) return EnumActionResult.SUCCESS;
             LocksetBitting bitting = ((IBittedTE) te).getBitting();
             ItemStack stack = new ItemStack(Items.lockset, 1, bitting.descriptor.ordinal());
             Lockset.setBitting(stack, bitting);
@@ -51,9 +58,31 @@ public class CoreExtractor extends Item implements ICustomModelRegistration {
     }
 
     @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        TextFormatting tf = TextFormatting.LIGHT_PURPLE, r = TextFormatting.RESET;
+        tooltip.add(tf + "Debug Tool" + r);
+        tooltip.add("Right click or craft with a keyed block");
+    }
+
+    @Override
     public void registerCustomModels(Common proxy) {
         proxy.setModelLocation(this, 0,
-                new ModelResourceLocation(new ResourceLocation("securitycraft", "teisr_core_extractor"), "inventory")
+                new ModelResourceLocation(
+                        new ResourceLocation(
+                                "securitycraft",
+                                "teisr_core_extractor"),
+                        "inventory"
+                )
+        );
+        ModelBakery.registerItemVariants(this,
+                new ModelResourceLocation(
+                        new ResourceLocation(
+                                "securitycraft",
+                                "core_extractor_flipped"
+                        ),
+                        "inventory"
+                )
         );
     }
 }
