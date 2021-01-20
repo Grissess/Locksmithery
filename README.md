@@ -23,8 +23,8 @@ interface like the following (apologies for its messiness):
 The columns each represent an individual _pin_ (sometimes a _position_) that
 the key will interface with. The numbers across the rows represent a _depth of
 cut_, or just a _cut_. Keys can only be _bitted_ (cut in their entirety) to one
-depth; once you've chosen one cut for each pin, you can extract the key from
-the bottom slot. The tooltip for the key always reveals its bitting.
+depth per pin; once you've chosen one cut for each pin, you can extract the key
+from the bottom slot. The tooltip for the key always reveals its bitting.
 
 ![bitting key diamond](../doc/img/bitting_key_diamond.png)
 
@@ -58,9 +58,10 @@ In order to use the keying system, the following "keyed blocks" are
 implemented. You can craft each of these shapelessly with a lockset to set its
 bitting (essentially, to configure which keys will fit); these blocks _cannot_
 be placed until configured (since, in SMP, they need a fitting key to
-break--see below). Once keyed with a lockset, the block's tooltip will register
-that it is "Keyed", but does not reveal the lockset bitting, so as to keep it
-confidential.
+break--see below). Crafting a keyed block with a lockset doesn't consume the
+lockset--you can use the same lockset for as many blocks as you'd like. Once
+keyed with a lockset, the block's tooltip will register that it is "Keyed", but
+does not reveal the lockset bitting, so as to keep it confidential.
 
 **Secure Block**: The most basic keyed block, it is solid and indestructible to
 players not in creative mode. It can be punched with a fitting key to break
