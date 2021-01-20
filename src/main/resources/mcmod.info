@@ -1,14 +1,14 @@
 [
 {
-  "modid": "securitycraft",
-  "name": "SecurityCraft",
-  "description": "Simple security tools for Minecraft",
+  "modid": "locksmithery",
+  "name": "Locksmithery",
+  "description": "Simple locksmithing-based security and safety for Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Grissess"],
-  "credits": "the Forge and FML guys, for making the template",
+  "authorList": ["Grissess", "jsh"],
+  "credits": "Grissess: development; jsh: art; and the Forge and FML guys, for making the template",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

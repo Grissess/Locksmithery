@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "hhh",
+    "hhh",
+    "hhh"
+  ],
+  "key": {
+    "h": {"item": "locksmithery:hardened_iron_nugget"}
+  },
+  "result": {
+    "item": "locksmithery:hardened_iron_ingot"
+  }
+}

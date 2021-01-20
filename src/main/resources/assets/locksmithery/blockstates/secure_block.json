@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "locksmithery:secure_block" }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "locksmithery:block/captive_key_holder_indicator",
+  "textures": {
+    "color": "locksmithery:blocks/px_green"
+  }
+}

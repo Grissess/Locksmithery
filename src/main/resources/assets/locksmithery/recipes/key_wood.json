@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss"
+  ],
+  "key": {
+    "s": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "item": "locksmithery:key",
+    "data": 0
+  }
+}

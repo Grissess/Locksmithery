@@ -1,0 +1,6 @@
+{
+	"door_locked": {
+		"category": "block",
+		"sounds": ["locksmithery:door_locked"]
+	}
+}

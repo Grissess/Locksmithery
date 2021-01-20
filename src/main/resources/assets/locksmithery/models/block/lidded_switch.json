@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "particle": "locksmithery:entity/liddedswitch/base",
+    "main": "locksmithery:entity/liddedswitch/base"
+  },
+  "elements": []
+}

@@ -1,7 +1,0 @@
-{
-  "textures": {
-    "particle": "securitycraft:entity/liddedswitch/base",
-    "main": "securitycraft:entity/liddedswitch/base"
-  },
-  "elements": []
-}

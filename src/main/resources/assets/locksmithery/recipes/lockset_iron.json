@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ppp",
+    " c "
+  ],
+  "key": {
+    "p": {"item": "locksmithery:pin"},
+    "c": {"item": "locksmithery:cylinder", "data": 1 }
+  },
+  "result": {
+    "item": "locksmithery:lockset",
+    "data": 1
+  }
+}

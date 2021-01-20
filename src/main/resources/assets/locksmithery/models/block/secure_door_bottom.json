@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_bottom",
+    "textures": {
+        "bottom": "locksmithery:blocks/secure_door_lower",
+        "top": "locksmithery:blocks/secure_door_upper"
+    }
+}

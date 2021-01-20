@@ -1,6 +1,0 @@
-{
-	"door_locked": {
-		"category": "block",
-		"sounds": ["securitycraft:door_locked"]
-	}
-}

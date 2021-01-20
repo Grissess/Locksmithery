@@ -1,6 +1,0 @@
-{
-  "parent": "securitycraft:block/captive_key_holder_indicator",
-  "textures": {
-    "color": "securitycraft:blocks/px_green"
-  }
-}

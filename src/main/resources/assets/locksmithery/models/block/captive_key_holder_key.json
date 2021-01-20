@@ -1,0 +1,19 @@
+{
+  "textures": {
+    "color": "locksmithery:blocks/px_gold"
+  },
+  "elements": [
+    {
+      "from": [6, 6, 7],
+      "to": [10, 11, 9],
+      "faces": {
+        "down": {"uv": [0, 0, 1, 1], "texture": "#color"},
+        "up": {"uv": [0, 0, 1, 1], "texture": "#color"},
+        "north": {"uv": [0, 0, 1, 1], "texture": "#color"},
+        "south": {"uv": [0, 0, 1, 1], "texture": "#color"},
+        "west": {"uv": [0, 0, 1, 1], "texture": "#color"},
+        "east": {"uv": [0, 0, 1, 1], "texture": "#color"}
+      }
+    }
+  ]
+}

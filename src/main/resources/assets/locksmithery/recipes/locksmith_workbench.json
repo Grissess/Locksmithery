@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "k",
+    "c"
+  ],
+  "key": {
+    "k": {"item": "locksmithery:key", "data": 0 },
+    "c": {"item": "minecraft:crafting_table"}
+  },
+  "result": {
+    "item": "locksmithery:locksmith_workbench"
+  }
+}

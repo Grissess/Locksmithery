@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "side": "locksmithery:blocks/captive_key_holder_side",
+    "top": "locksmithery:blocks/captive_key_holder_top",
+    "particle": "locksmithery:blocks/captive_key_holder_side"
+  },
+  "elements": [
+    {
+      "from": [2, 0, 4],
+      "to": [14, 6, 12],
+      "faces": {
+        "down": {"uv": [0, 0, 16, 16], "texture": "#side", "cullface": "down"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#top"},
+        "north": {"uv": [0, 0, 16, 16], "texture": "#side"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#side"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#side"}
+      }
+    }
+  ]
+}

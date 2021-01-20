@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "g g",
+    "ggg"
+  ],
+  "key": {
+    "g": {"item": "minecraft:gold_nugget"}
+  },
+  "result": {
+    "item": "locksmithery:keyring"
+  }
+}
