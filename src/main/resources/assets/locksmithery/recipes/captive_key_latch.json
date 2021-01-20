@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "H H",
+    "HsH"
+  ],
+  "key": {
+    "H": {"item": "locksmithery:hardened_iron_ingot"},
+    "s": {"item": "locksmithery:solenoid"}
+  },
+  "result": {
+    "item": "locksmithery:captive_key_latch"
+  }
+}

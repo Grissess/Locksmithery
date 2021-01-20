@@ -45,6 +45,10 @@ public class Items {
             .setRegistryName("locking_cover")
             .setUnlocalizedName("Locking Cover")
             .setCreativeTab(CreativeTab.tab);
+    public static final Item solenoid = new Item()
+            .setRegistryName("solenoid")
+            .setUnlocalizedName("Solenoid")
+            .setCreativeTab(CreativeTab.tab);
 
     public static final Item locksmithing_workbench_item = new ItemBlock(Blocks.locksmith_workbench)
             .setRegistryName(Blocks.locksmith_workbench.getRegistryName())
@@ -68,6 +72,7 @@ public class Items {
             hardened_iron_nugget,
             hardened_iron_ingot,
             locking_cover,
+            solenoid,
 
             locksmithing_workbench_item,
     };

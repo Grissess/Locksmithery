@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " r",
+    "ii",
+    " r"
+  ],
+  "key": {
+    "r": {"item": "minecraft:redstone"},
+    "i": {"item": "minecraft:iron_nugget"}
+  },
+  "result": {
+    "item": "locksmithery:solenoid"
+  }
+}
